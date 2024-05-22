@@ -23,9 +23,8 @@ class DataObatController extends Controller
         $request->validate([
             'kode_obat' => 'required|unique:data_obat',
             'nama_obat' => 'required',
-            'tanggal_masuk' => 'required|date',
             'tanggal_expired' => 'required|date',
-            'stok' => 'required|integer|min:0',
+            'stok' => 'integer|min:0',
         ]);
 
         DataObat::create($request->all());
@@ -43,9 +42,8 @@ class DataObatController extends Controller
     {
         $request->validate([
             'nama_obat' => 'required',
-            'tanggal_masuk' => 'required|date',
             'tanggal_expired' => 'required|date',
-            'stok' => 'required|integer|min:0',
+            'stok' => 'integer|min:0',
         ]);
 
         $data_obat = DataObat::findOrFail($kode_obat);

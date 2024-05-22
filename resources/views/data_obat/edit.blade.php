@@ -13,16 +13,12 @@
                         <input type="text" class="form-control" id="nama_obat" name="nama_obat" value="{{ $data_obat->nama_obat }}">
                     </div>
                     <div class="form-group">
-                        <label for="tanggal_masuk">Tanggal Masuk</label>
-                        <input type="date" class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="{{ $data_obat->tanggal_masuk }}">
-                    </div>
-                    <div class="form-group">
                         <label for="tanggal_expired">Tanggal Expired</label>
                         <input type="date" class="form-control" id="tanggal_expired" name="tanggal_expired" value="{{ $data_obat->tanggal_expired }}">
                     </div>
                     <div class="form-group">
                         <label for="stok">Stok</label>
-                        <input type="number" class="form-control" id="stok" name="stok" value="{{ $data_obat->stok }}">
+                        <input type="number" class="form-control" id="stok" name="stok" value="{{ $data_obat->stok }}" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
