@@ -56,4 +56,7 @@
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('tanggal_keluar').setAttribute('min', new Date().toISOString().split("T")[0]);
+</script>
 @endsection

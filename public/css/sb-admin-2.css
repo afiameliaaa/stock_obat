@@ -29,7 +29,7 @@
   --success: #1cc88a;
   --info: #36b9cc;
   --warning: #f6c23e;
-  --danger: #e74a3b;
+  --danger: #FF6384;
   --light: #f8f9fc;
   --dark: #5a5c69;
   --breakpoint-xs: 0;
@@ -9610,7 +9610,7 @@ a.text-warning:hover, a.text-warning:focus {
 }
 
 .text-danger {
-  color: #e74a3b !important;
+  color: #FF6384 !important;
 }
 
 a.text-danger:hover, a.text-danger:focus {
@@ -10059,7 +10059,7 @@ a:focus {
 }
 
 .border-left-danger {
-  border-left: 0.25rem solid #e74a3b !important;
+  border-left: 0.25rem solid #FF6384 !important;
 }
 
 .border-bottom-danger {

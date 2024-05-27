@@ -11,9 +11,9 @@ use App\Models\DataObatKeluar;
 class ObatKeluarController extends Controller
 {
     public function index(){
-        $obatKeluar = DataObatKeluar::all();
+        $obatKeluar = DataObatKeluar::orderBy('tanggal_keluar', 'desc')->paginate(5);
         return view('data_obat_keluar.obat_keluar', compact('obatKeluar'));
-    }
+    }    
 
     public function create(){
         $dataObat = DataObat::all();

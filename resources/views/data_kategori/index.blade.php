@@ -40,6 +40,7 @@
                     @endforeach
                 </tbody>
               </table>
+              {!! $kategori->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
           </div>
     </div>

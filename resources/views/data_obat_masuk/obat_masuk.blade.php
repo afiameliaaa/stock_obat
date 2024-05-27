@@ -15,10 +15,10 @@
                   </a>
                 </div>
                 
-
               <table class="table text-center" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px">
                 <thead>
                   <tr>
+                    <th>No</th>
                     <th>Kode Obat</th>
                     <th>Nama Obat</th>
                     <th>Tanggal Masuk</th>
@@ -30,6 +30,7 @@
                 <tbody>
                     @foreach($obatMasuk as $obat)
                       <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $obat->kode_obat }}</td>
                         <td>{{ $obat->nama_obat }}</td>
                         <td>{{ $obat->tanggal_masuk }}</td>
@@ -40,6 +41,7 @@
                     @endforeach
                 </tbody>
               </table>
+              {!! $obatMasuk->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
           </div>
     </div>

@@ -9,7 +9,7 @@ class DataObatController extends Controller
 {
     public function index()
     {
-        $data_obat = DataObat::all();
+        $data_obat = DataObat::orderBy('nama_obat', 'asc')->paginate(5);
         return view('data_obat.index', compact('data_obat'));
     }
 

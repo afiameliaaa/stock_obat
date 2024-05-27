@@ -14,16 +14,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', '/login');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/obat-masuk', [App\Http\Controllers\ObatMasukController::class, 'index'])->name('obat_masuk.index');
 Route::get('/obat-keluar', [App\Http\Controllers\ObatKeluarController::class, 'index'])->name('obat_keluar.index');
 Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan');
+Route::get('/print-pdf', [App\Http\Controllers\LaporanController::class, 'printPdf']);
 
 Route::get('/data_obat', [App\Http\Controllers\DataObatController::class, 'index'])->name('data_obat.index');
 Route::get('/data_obat/create', [App\Http\Controllers\DataObatController::class, 'create'])->name('data_obat.create');

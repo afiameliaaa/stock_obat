@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\DataObat;
+use App\Models\DataObatMasuk;
+use App\Models\DataObatKeluar;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $jumlahObat = DataObat::count();
+        $jumlahObatMasuk = DataObatMasuk::count();
+        $jumlahObatKeluar = DataObatKeluar::count();
+
+        $year = Carbon::now()->year;
+
+        $obatMasukPerBulan = DataObatMasuk::selectRaw('DATE(tanggal_masuk) as tanggal, SUM(jumlah) as jumlah')
+            ->whereYear('tanggal_masuk', $year)
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
+            ->get();
+
+        $obatKeluarPerBulan = DataObatKeluar::selectRaw('DATE(tanggal_keluar) as tanggal, SUM(sisa) as jumlah')
+            ->whereYear('tanggal_keluar', $year)
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
+            ->get();
+
+        return view('home', compact('jumlahObat', 'jumlahObatMasuk', 'jumlahObatKeluar', 'obatMasukPerBulan', 'obatKeluarPerBulan'));
     }
 }

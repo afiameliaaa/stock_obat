@@ -8,7 +8,7 @@ use App\Models\Satuan;
 class SatuanController extends Controller
 {
     public function index() {
-        $satuan = Satuan::all();
+        $satuan = Satuan::paginate(5);
         return view('data_satuan.index', compact('satuan'));
     }
 

@@ -11,9 +11,9 @@ use App\Models\DataObatMasuk;
 class ObatMasukController extends Controller
 {
     public function index(){
-        $obatMasuk = DataObatMasuk::all();
+        $obatMasuk = DataObatMasuk::orderBy('tanggal_masuk', 'desc')->paginate(5);
         return view('data_obat_masuk.obat_masuk', compact('obatMasuk'));
-    }
+    }    
 
     public function create(){
         $dataObat = DataObat::all();

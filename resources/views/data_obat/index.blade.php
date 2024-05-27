@@ -9,6 +9,7 @@
                 <table class="table mt-3 text-center">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Kode Obat</th>
                             <th>Nama Obat</th>
                             <th>Tanggal Expired</th>
@@ -19,22 +20,24 @@
                     <tbody>
                         @foreach ($data_obat as $obat)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $obat->kode_obat }}</td>
                                 <td>{{ $obat->nama_obat }}</td>
                                 <td>{{ $obat->tanggal_expired }}</td>
                                 <td>{{ $obat->stok }}</td>
                                 <td>
                                     <a href="{{ route('data_obat.edit', $obat->kode_obat) }}" class="btn btn-primary"><span class='fa fa-edit'></span></a>
-                                    <form action="{{ route('data_obat.destroy', $obat->kode_obat) }}" method="POST" style="display: inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                    {{-- <form action="{{ route('data_obat.destroy', $obat->kode_obat) }}" method="POST" style="display: inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger"><span class='fa fa-trash'></span></button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {!! $data_obat->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
         </div>
     </div>
