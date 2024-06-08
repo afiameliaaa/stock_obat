@@ -12,6 +12,8 @@
                                 <div class="text-center">
                                     <h1 class="fw-bold font-weight-bold text-gray-900 mb-2">{{ __('Login') }}</h1>
                                 </div>
+
+                                @include('components.flash')
                                 <form class="user" method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-group">
@@ -31,14 +33,9 @@
                                         @enderror
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Login
+                                        {{ __('Login') }}
                                     </button>
                                 </form>
-                                @if (Route::has('register'))
-                                    <div class="text-center mt-3">
-                                        <a class="small" href="{{ route('register') }}">{{ __('Don\'t have an account? Register here') }}</a>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>

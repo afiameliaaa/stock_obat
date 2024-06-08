@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Tambah Data Obat</h1>
-                <form action="{{ route('data_obat.store') }}" method="POST">
+                <form action="{{ route('obat.create') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="kode_obat">Kode Obat</label>

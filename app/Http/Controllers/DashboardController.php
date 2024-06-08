@@ -6,24 +6,11 @@ use App\Models\DataObat;
 use App\Models\DataObatMasuk;
 use App\Models\DataObatKeluar;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $jumlahObat = DataObat::count();
@@ -44,6 +31,23 @@ class HomeController extends Controller
             ->orderBy('tanggal')
             ->get();
 
-        return view('home', compact('jumlahObat', 'jumlahObatMasuk', 'jumlahObatKeluar', 'obatMasukPerBulan', 'obatKeluarPerBulan'));
+        return view('home', [
+            'jumlahObat' => $jumlahObat,
+            'jumlahObatMasuk' => $jumlahObatMasuk,
+            'jumlahObatKeluar' => $jumlahObatKeluar,
+            'obatMasukPerBulan' => $obatMasukPerBulan,
+            'obatKeluarPerBulan' => $obatKeluarPerBulan
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success', 'You have been logged out successfully!');
     }
 }

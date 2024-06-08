@@ -11,9 +11,5 @@ class Satuan extends Model
 
     protected $table = 'satuan_obat';
 
-    protected $primaryKey = 'id';
-
-    protected $fillable = [
-        'satuan'
-    ];
+    protected $guarded = [];
 }

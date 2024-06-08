@@ -1,7 +1,15 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataObatController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ObatKeluarController;
+use App\Http\Controllers\ObatMasukController;
+use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,38 +22,75 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::redirect('/', '/login');
-Auth::routes();
+Route::middleware('guest')->group(function() {
+    Route::controller(AuthController::class)->group(function() {
+        Route::match(['GET', 'POST'], '/', 'index')->name('login');
+    });
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/obat-masuk', [App\Http\Controllers\ObatMasukController::class, 'index'])->name('obat_masuk.index');
-Route::get('/obat-keluar', [App\Http\Controllers\ObatKeluarController::class, 'index'])->name('obat_keluar.index');
-Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan');
-Route::get('/print-pdf', [App\Http\Controllers\LaporanController::class, 'printPdf']);
+Route::middleware('auth')->group(function() {
+    Route::prefix('dashboard')->group(function() {
+        Route::controller(DashboardController::class)->group(function() {
+            Route::match(['GET'], '/', 'index')->name('dashboard');
+            Route::match(['POST', 'POST'], 'logout', 'logout')->name('logout');
+        });
+        Route::middleware('role:apoteker')->group(function() {
+            Route::prefix('obat')->group(function() {
+                Route::controller(DataObatController::class)->group(function() {
+                    Route::match(['GET'], '/', 'index')->name('obat.index');
+                    Route::match(['GET', 'POST'], 'create', 'create')->name('obat.create');
+                    Route::match(['GET', 'POST'], 'update/{id}', 'update')->name('obat.update');
+                    Route::match(['GET', 'POST'], 'delete/{id}', 'delete')->name('obat.delete');
+                });
+                Route::prefix('masuk')->group(function() {
+                    Route::controller(ObatMasukController::class)->group(function() {
+                        Route::match(['GET'], '/', 'index')->name('obat.masuk.index');
+                        Route::match(['GET', 'POST'], 'create', 'create')->name('obat.masuk.create');
+                    });
+                });
+                Route::prefix('keluar')->group(function() {
+                    Route::controller(ObatKeluarController::class)->group(function() {
+                        Route::match(['GET'], '/', 'index')->name('obat.keluar.index');
+                        Route::match(['GET', 'POST'], 'create', 'create')->name('obat.keluar.create');
+                    });
+                });
+            });
+            Route::prefix('kategori')->group(function() {
+                Route::controller(KategoriController::class)->group(function() {
+                    Route::match(['GET'], '/', 'index')->name('kategori.index');
+                    Route::match(['GET', 'POST'], 'create', 'create')->name('kategori.create');
+                    Route::match(['GET', 'POST'], 'update/{id}', 'update')->name('kategori.update');
+                    Route::match(['GET', 'POST'], 'delete/{id}', 'delete')->name('kategori.delete');
+                });
+            });
+            Route::prefix('satuan')->group(function() {
+                Route::controller(SatuanController::class)->group(function() {
+                    Route::match(['GET'], '/', 'index')->name('satuan.index');
+                    Route::match(['GET', 'POST'], 'create', 'create')->name('satuan.create');
+                    Route::match(['GET', 'POST'], 'update/{id}', 'update')->name('satuan.update');
+                    Route::match(['GET', 'POST'], 'delete/{id}', 'delete')->name('satuan.delete');
+                });
+            });
+        });
+        Route::middleware('role:kabag')->group(function() {
+            Route::prefix('user')->group(function() {
+                Route::controller(UserController::class)->group(function() {
+                    Route::match(['GET'], '/', 'index')->name('user.index');
+                    Route::match(['GET', 'POST'], 'create', 'create')->name('user.create');
+                    Route::match(['GET', 'POST'], 'update/{id}', 'update')->name('user.update');
+                    Route::match(['GET', 'POST'], 'delete/{id}', 'delete')->name('user.delete');
+                });
+            });
+            Route::prefix('laporan')->group(function() {
+                Route::controller(LaporanController::class)->group(function() {
+                    Route::match(['GET'], '/', 'index')->name('laporan.index');
+                    Route::prefix('print')->group(function() {
+                        //incase of adding more print like xlsx, and etc
+                        Route::match(['GET'], 'pdf', 'print')->name('laporan.print');
+                    });
+                });
+            });
+        });
 
-Route::get('/data_obat', [App\Http\Controllers\DataObatController::class, 'index'])->name('data_obat.index');
-Route::get('/data_obat/create', [App\Http\Controllers\DataObatController::class, 'create'])->name('data_obat.create');
-Route::post('/data_obat', [App\Http\Controllers\DataObatController::class, 'store'])->name('data_obat.store');
-Route::get('/data_obat/edit/{kode_obat}', [App\Http\Controllers\DataObatController::class, 'edit'])->name('data_obat.edit');
-Route::put('/data_obat/{kode_obat}', [App\Http\Controllers\DataObatController::class, 'update'])->name('data_obat.update');
-Route::delete('/data_obat/{kode_obat}', [App\Http\Controllers\DataObatController::class, 'destroy'])->name('data_obat.destroy');
-
-Route::get('/kategori', [App\Http\Controllers\KategoriController::class, 'index'])->name('kategori.index');
-Route::get('/kategori/create', [App\Http\Controllers\KategoriController::class, 'create'])->name('kategori.create');
-Route::post('/kategori', [App\Http\Controllers\KategoriController::class, 'store'])->name('kategori.store');
-Route::get('/kategori/edit/{id}', [App\Http\Controllers\KategoriController::class, 'edit'])->name('kategori.edit');
-Route::put('/kategori/{id}', [App\Http\Controllers\KategoriController::class, 'update'])->name('kategori.update');
-Route::delete('/kategori/{id}', [App\Http\Controllers\KategoriController::class, 'destroy'])->name('kategori.destroy');
-
-Route::get('/satuan', [App\Http\Controllers\SatuanController::class, 'index'])->name('satuan.index');
-Route::get('/satuan/create', [App\Http\Controllers\SatuanController::class, 'create'])->name('satuan.create');
-Route::post('/satuan', [App\Http\Controllers\SatuanController::class, 'store'])->name('satuan.store');
-Route::get('/satuan/edit/{id}', [App\Http\Controllers\SatuanController::class, 'edit'])->name('satuan.edit');
-Route::put('/satuan/{id}', [App\Http\Controllers\SatuanController::class, 'update'])->name('satuan.update');
-Route::delete('/satuan/{id}', [App\Http\Controllers\SatuanController::class, 'destroy'])->name('satuan.destroy');
-
-Route::get('/obat_keluar/create', [App\Http\Controllers\ObatKeluarController::class, 'create'])->name('obat_keluar.create');
-Route::post('/obat_keluar', [App\Http\Controllers\ObatKeluarController::class, 'store'])->name('obat_keluar.store');
-
-Route::get('/obat_masuk/create', [App\Http\Controllers\ObatMasukController::class, 'create'])->name('obat_masuk.create');
-Route::post('/obat_masuk', [App\Http\Controllers\ObatMasukController::class, 'store'])->name('obat_masuk.store');
+    });
+});

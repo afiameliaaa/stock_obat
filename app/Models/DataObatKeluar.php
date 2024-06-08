@@ -11,14 +11,5 @@ class DataObatKeluar extends Model
 
     protected $table = 'obat_keluar';
 
-    protected $primaryKey = 'kode_obat';
-
-    protected $fillable = [
-        'kode_obat',
-        'nama_obat',
-        'tanggal_keluar',
-        'kategori_obat',
-        'satuan',
-        'sisa'
-    ];
+    protected $guarded = [];
 }

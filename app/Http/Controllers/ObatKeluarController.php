@@ -10,45 +10,50 @@ use App\Models\DataObatKeluar;
 
 class ObatKeluarController extends Controller
 {
-    public function index(){
-        $obatKeluar = DataObatKeluar::orderBy('tanggal_keluar', 'desc')->paginate(5);
-        return view('data_obat_keluar.obat_keluar', compact('obatKeluar'));
-    }    
-
-    public function create(){
-        $dataObat = DataObat::all();
-        $kategori = Kategori::all();
-        $satuan = Satuan::all();
-        return view('data_obat_keluar.create', compact('dataObat', 'kategori', 'satuan'));
+    public function index()
+    {
+        return view('data_obat_keluar.obat_keluar', [
+            'obatKeluar' => DataObatKeluar::orderBy('tanggal_keluar', 'desc')->get()
+        ]);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'kode_obat' => 'required',
-            'kategori' => 'required',
-            'satuan' => 'required',
-            'tanggal_keluar' => 'required|date',
-            'stok_kurang' => 'required|integer',
-        ]);
-
-        $dataObat = DataObat::find($request->kode_obat);
-
-        if ($dataObat && $dataObat->stok >= $request->stok_kurang) {
-            $dataObat->stok -= $request->stok_kurang;
-            $dataObat->save();
-
-            DataObatKeluar::create([
-                'kode_obat' => $dataObat->kode_obat,
-                'nama_obat' => $dataObat->nama_obat,
-                'tanggal_keluar' => $request->tanggal_keluar,
-                'kategori_obat' => $request->kategori,
-                'satuan' => $request->satuan,
-                'sisa' => $request->stok_kurang
+    public function create(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'kode_obat' => 'required',
+                'kategori' => 'required',
+                'satuan' => 'required',
+                'tanggal_keluar' => 'required|date',
+                'stok_kurang' => 'required|integer',
             ]);
 
-            return redirect()->route('obat_keluar.index')->with('success', 'Data Obat Keluar berhasil ditambahkan');
-        } else {
-            return redirect()->back()->withErrors(['stok_kurang' => 'Stok tidak mencukupi']);
+            $findObat = DataObat::where('kode_obat', $request->kode_obat)->first();
+            $dataObat = DataObat::find($findObat->id);
+
+            if ($dataObat && $dataObat->stok >= $request->stok_kurang) {
+                $dataObat->stok -= $request->stok_kurang;
+                $dataObat->save();
+
+                DataObatKeluar::create([
+                    'kode_obat' => $dataObat->kode_obat,
+                    'nama_obat' => $dataObat->nama_obat,
+                    'tanggal_keluar' => $request->tanggal_keluar,
+                    'kategori_obat' => $request->kategori,
+                    'satuan' => $request->satuan,
+                    'sisa' => $request->stok_kurang
+                ]);
+
+                return redirect()->route('obat.keluar.index')->with('success', 'Data Obat Keluar berhasil ditambahkan');
+            } else {
+                return redirect()->back()->withErrors(['stok_kurang' => 'Stok tidak mencukupi']);
+            }
         }
+
+        return view('data_obat_keluar.create', [
+            'dataObat' => DataObat::all(),
+            'kategori' => Kategori::all(),
+            'satuan' => Satuan::all(),
+        ]);
     }
 }

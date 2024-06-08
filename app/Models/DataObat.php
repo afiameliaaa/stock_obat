@@ -11,7 +11,5 @@ class DataObat extends Model
 
     protected $table = 'data_obat';
 
-    protected $primaryKey = 'kode_obat';
-
-    protected $fillable = ['kode_obat', 'nama_obat', 'tanggal_expired', 'stok'];
+    protected $guarded = [];
 }

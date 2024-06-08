@@ -10,7 +10,8 @@ use Dompdf\Options;
 
 class LaporanController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $data_obat = DataObat::all();
 
         foreach ($data_obat as $obat) {
@@ -18,7 +19,9 @@ class LaporanController extends Controller
             $obat->obat_keluar = DataObatKeluar::where('kode_obat', $obat->kode_obat)->get();
         }
 
-        return view('laporan', compact('data_obat'));
+        return view('laporan', [
+            'data_obat' => $data_obat
+        ]);
     }
 
     public function printPdf()
