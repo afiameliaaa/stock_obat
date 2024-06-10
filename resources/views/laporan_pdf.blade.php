@@ -58,6 +58,11 @@
             text-align: center;
             line-height: 5px;
         }
+
+        .between {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 
@@ -127,6 +132,24 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class = "rangkasurat">
+                            <table width="100%" style="margin: 5px">
+                                <tr>
+                                    <td class="tengah">
+                                        <div>
+                                            KABAG
+                                            <div style="width: 200px; height: 100px;"></div>
+                                        </div>
+                                    </td>
+                                    <td class="tengah">
+                                        <div>
+                                            APOTEKER
+                                            <div style="width: 200px; height: 100px;"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
