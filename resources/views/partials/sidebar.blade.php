@@ -6,7 +6,7 @@
             <img src="{{ asset('assets/logo.png') }}" alt="" style="width: 45px; height: 45px;">
         </div>
         <div class="sidebar-brand-text mx-2 mt-3">
-            <h3 class="fw-bold font-weight-bold">Polije</h3>
+            <h3 class="fw-bold font-weight-bold">{{ env('APP_NAME')}}</h3>
         </div>
     </a>
 

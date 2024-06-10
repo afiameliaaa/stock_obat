@@ -37,8 +37,7 @@
             background-color: #f2f2f2;
             text-align: left;
         }
-    </style>
-    <style type= "text/css">
+
         body {
             font-family: arial;
         }
@@ -72,7 +71,7 @@
                         <div class = "rangkasurat">
                             <table width = "100%">
                                 <tr>
-                                    <td> <img src="{{ asset('assets/Polije.png') }}" width="140px"> </td>
+                                    <td> <img src="{{ $base64 }}" width="140px"> </td>
                                     <td class = "tengah">
                                         <h2>PEMERINTAH DAERAH PROVINSI JAWA TIMUR</h2>
                                         <h2>RUMAH SAKIT DAERAH (RSD) DR.SOEBANDI</h2>
