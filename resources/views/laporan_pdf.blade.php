@@ -37,8 +37,7 @@
             background-color: #f2f2f2;
             text-align: left;
         }
-    </style>
-    <style type= "text/css">
+
         body {
             font-family: arial;
         }
@@ -59,6 +58,11 @@
             text-align: center;
             line-height: 5px;
         }
+
+        .between {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 
@@ -72,7 +76,7 @@
                         <div class = "rangkasurat">
                             <table width = "100%">
                                 <tr>
-                                    <td> <img src="{{ asset('assets/Polije.png') }}" width="140px"> </td>
+                                    <td> <img src="{{ $base64 }}" width="140px"> </td>
                                     <td class = "tengah">
                                         <h2>PEMERINTAH DAERAH PROVINSI JAWA TIMUR</h2>
                                         <h2>RUMAH SAKIT DAERAH (RSD) DR.SOEBANDI</h2>
@@ -128,6 +132,24 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class = "rangkasurat">
+                            <table width="100%" style="margin: 5px">
+                                <tr>
+                                    <td class="tengah">
+                                        <div>
+                                            KABAG
+                                            <div style="width: 200px; height: 100px;"></div>
+                                        </div>
+                                    </td>
+                                    <td class="tengah">
+                                        <div>
+                                            APOTEKER
+                                            <div style="width: 200px; height: 100px;"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,8 @@
                     <span class="text"><strong>Tambah Satuan</strong></span>
                   </a>
                 </div>
-              <table class="table text-center" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px">
+                @include('components.flash')
+              <table class="table text-center" id="table" width="100%" cellspacing="0" style="font-size: 12px">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -27,10 +28,9 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $sat->satuan }}</td>
                         <td>
-                            <a href="{{ route('satuan.edit', $sat->id) }}" class="btn btn-primary btn-sm"><span class='fa fa-edit'></span></a>
-                            <form action="{{ route('satuan.destroy', $sat->id) }}" method="POST" style="display:inline-block;">
+                            <a href="{{ route('satuan.update', $sat->id) }}" class="btn btn-primary btn-sm"><span class='fa fa-edit'></span></a>
+                            <form action="{{ route('satuan.delete', $sat->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
-                                @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"><span class='fa fa-trash'></span></button>
                             </form>
                         </td>
@@ -38,7 +38,6 @@
                     @endforeach
                 </tbody>
               </table>
-              {!! $satuan->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
           </div>
     </div>

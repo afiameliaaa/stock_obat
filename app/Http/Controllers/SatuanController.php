@@ -7,46 +7,53 @@ use App\Models\Satuan;
 
 class SatuanController extends Controller
 {
-    public function index() {
-        $satuan = Satuan::paginate(5);
-        return view('data_satuan.index', compact('satuan'));
+    public function index()
+    {
+        return view('data_satuan.index', [
+            'satuan' => Satuan::all(),
+        ]);
     }
 
-    public function create() {
+    public function create(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'satuan' => 'required|string|max:255'
+            ]);
+
+            Satuan::create([
+                'satuan' => $request->satuan
+            ]);
+
+            return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan');
+        }
+
         return view('data_satuan.create');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'satuan' => 'required|string|max:255'
-        ]);
-
-        Satuan::create([
-            'satuan' => $request->satuan
-        ]);
-
-        return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan');
-    }
-
-    public function edit($id) {
+    public function update(Request $request, $id)
+    {
         $satuan = Satuan::findOrFail($id);
-        return view('data_satuan.edit', compact('satuan'));
+
+        if ($request->isMethod('POST')) {
+            $request->validate([
+                'satuan' => 'required|string|max:255'
+            ]);
+
+            $satuan->update([
+                'satuan' => $request->satuan
+            ]);
+
+            return redirect()->route('satuan.index')->with('success', 'Satuan berhasil diperbarui');
+        }
+
+        return view('data_satuan.edit', [
+            'satuan' => $satuan
+        ]);
     }
 
-    public function update(Request $request, $id) {
-        $request->validate([
-            'satuan' => 'required|string|max:255'
-        ]);
-
-        $satuan = Satuan::findOrFail($id);
-        $satuan->update([
-            'satuan' => $request->satuan
-        ]);
-
-        return redirect()->route('satuan.index')->with('success', 'Satuan berhasil diperbarui');
-    }
-
-    public function destroy($id) {
+    public function delete($id)
+     {
         $satuan = Satuan::findOrFail($id);
         $satuan->delete();
 

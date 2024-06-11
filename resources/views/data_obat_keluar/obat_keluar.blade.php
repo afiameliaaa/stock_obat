@@ -7,14 +7,16 @@
             <div class="table-responsive">
 
                 <div class="my-2">
-                  <a href="{{ route('obat_keluar.create') }}" class="btn btn-dark btn-sm">
+                  <a href="{{ route('obat.keluar.create') }}" class="btn btn-dark btn-sm">
                     <span class="icon text-white-50">
                       <i class="fas fa-folder-open"></i>
                     </span>
                     <span class="text"><strong>Tambah Obat Keluar</strong></span>
                   </a>
                 </div>
-              <table class="table text-center" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px">
+
+                @include('components.flash')
+              <table class="table text-center" id="table" width="100%" cellspacing="0" style="font-size: 12px">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -27,9 +29,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach($obatKeluar as $obat)
+                    @foreach($obatKeluar as $index => $obat)
                       <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $index + 1 }}</td>
                         <td>{{ $obat->kode_obat }}</td>
                         <td>{{ $obat->nama_obat }}</td>
                         <td>{{ $obat->tanggal_keluar }}</td>
@@ -40,7 +42,6 @@
                     @endforeach
                 </tbody>
               </table>
-              {!! $obatKeluar->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
           </div>
     </div>

@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Data Obat</h1>
-                <a href="{{ route('data_obat.create') }}" class="btn btn-success">Tambah Data Obat</a>
-                <table class="table mt-3 text-center">
+                <a href="{{ route('obat.create') }}" class="btn btn-success">Tambah Data Obat</a>
+                <table id="table" class="table mt-3 text-center">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -18,26 +18,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data_obat as $obat)
+                        @foreach ($data_obat as $index => $obat)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>{{ $obat->kode_obat }}</td>
                                 <td>{{ $obat->nama_obat }}</td>
                                 <td>{{ $obat->tanggal_expired }}</td>
                                 <td>{{ $obat->stok }}</td>
                                 <td>
-                                    <a href="{{ route('data_obat.edit', $obat->kode_obat) }}" class="btn btn-primary"><span class='fa fa-edit'></span></a>
-                                    {{-- <form action="{{ route('data_obat.destroy', $obat->kode_obat) }}" method="POST" style="display: inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><span class='fa fa-trash'></span></button>
-                                    </form> --}}
+                                    <a href="{{ route('obat.update', $obat->id) }}" class="btn btn-primary"><span class='fa fa-edit'></span></a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {!! $data_obat->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
         </div>
     </div>

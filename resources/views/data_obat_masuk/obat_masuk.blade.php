@@ -7,15 +7,16 @@
             <div class="table-responsive">
 
                 <div class="my-2">
-                  <a href="{{ route('obat_masuk.create') }}" class="btn btn-dark btn-sm">
+                  <a href="{{ route('obat.masuk.create') }}" class="btn btn-dark btn-sm">
                     <span class="icon text-white-50">
                       <i class="fas fa-folder-open"></i>
                     </span>
                     <span class="text"><strong>Tambah Obat Masuk</strong></span>
                   </a>
                 </div>
-                
-              <table class="table text-center" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px">
+
+                @include('components.flash')
+              <table class="table text-center" id="table" width="100%" cellspacing="0" style="font-size: 12px">
                 <thead>
                   <tr>
                     <th>No</th>
@@ -41,7 +42,6 @@
                     @endforeach
                 </tbody>
               </table>
-              {!! $obatMasuk->withQueryString()->links('pagination::bootstrap-5') !!}
             </div>
           </div>
     </div>

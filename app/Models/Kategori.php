@@ -11,9 +11,5 @@ class Kategori extends Model
 
     protected $table = 'kategori_obat';
 
-    protected $primaryKey = 'id';
-
-    protected $fillable = [
-        'nama_kategori'
-    ];
+    protected $guarded = [];
 }

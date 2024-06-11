@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div class="my-2 mx-2">
-                  <a href="{{ url('/print-pdf') }}" class="btn btn-dark btn-sm"> 
+                  <a href="{{ route('laporan.print') }}" class="btn btn-dark btn-sm">
                     <span class="icon text-white-50">
                         <i class="fas fa-print"></i>
                     </span>
@@ -26,7 +26,7 @@
                             <th>Stok Sekarang</th>
                         </tr>
                     </thead>
-                    <tbody> 
+                    <tbody>
                         @foreach($data_obat as $index => $obat)
                             @php $max_count = max(count($obat->obat_masuk), count($obat->obat_keluar)); @endphp
                             @for ($i = 0; $i < $max_count; $i++)

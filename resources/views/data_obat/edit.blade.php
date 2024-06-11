@@ -5,9 +5,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Edit Data Obat</h1>
-                <form action="{{ route('data_obat.update', $data_obat->kode_obat) }}" method="POST">
+                <form action="{{ route('obat.update', $data_obat->id) }}" method="POST">
                     @csrf
-                    @method('PUT')
                     <div class="form-group">
                         <label for="nama_obat">Nama Obat</label>
                         <input type="text" class="form-control" id="nama_obat" name="nama_obat" value="{{ $data_obat->nama_obat }}">
